@@ -56,7 +56,7 @@ public class DemoOne {
 	public static void completablefutureProcess(){
 		System.out.println("CompletableFuture process started.");
 		// create thread to execute completablefuture
-		ExecutorService executor = Executors.newFixedThreadPool(10);
+		ExecutorService executor = Executors.newFixedThreadPool(5);
 		
 		long start = System.currentTimeMillis();
 		List<CompletableFuture<Category>> futureCategories = new ArrayList<>();
@@ -75,7 +75,14 @@ public class DemoOne {
 		// execute the process in multiple thread
 		for (Transaction transaction : transactions){
 			CompletableFuture<Category> futureCategory = 
-				CompletableFuture.supplyAsync(() -> CategorizationService.categorizeTransaction(transaction), executor);
+				CompletableFuture.supplyAsync(() -> {
+					// Get the currently running thread
+					Thread currentThread = Thread.currentThread();
+					System.out.println("Currently running thread: " + currentThread.getName());
+					
+					Category c = CategorizationService.categorizeTransaction(transaction);
+					return c;
+				}, executor);
 			// add the completableFuture object 
 			futureCategories.add(futureCategory);
 		}	
