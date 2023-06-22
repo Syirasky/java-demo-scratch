@@ -87,7 +87,7 @@ public class DemoOne {
 			futureCategories.add(futureCategory);
 		}	
 
-		// get the completablefuture results
+		// get the completablefuture results. this is the blocking code . it will stops here
 		List<Category> categories = futureCategories.stream().map(CompletableFuture::join).collect(Collectors.toList());
 	
 		// shutdown/kill the threads
