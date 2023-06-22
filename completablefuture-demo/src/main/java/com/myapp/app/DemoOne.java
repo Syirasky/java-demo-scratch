@@ -1,4 +1,4 @@
-package com.mycompany.app;
+package com.myapp.app;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,11 +29,14 @@ public class DemoOne {
 		
 		System.out.printf("The operation took %s ms%n", end - start);
 		System.out.println("Categories are: " + categories);
-		
+		System.out.println("=================================================");
 	}
 
 	public static void parallelProcess(){
-		System.out.println("parallel process started.");
+		// this one, parallel() will be using fixed pool of thread per-cpu core  . Runtime.getRuntime().availableProcessors()
+		// example for a 4-core cpu with multi-threading, sometimes it will shows 8 
+		// example for a 4-core cpu with single-threading, it will shows 4  
+		System.out.println("Parallel process started.");
 		long start = System.currentTimeMillis();
 		List<Category> categories = Stream.of(
 			new Transaction("1","description 1"),
@@ -46,10 +49,12 @@ public class DemoOne {
 		long end = System.currentTimeMillis();
 		System.out.printf("The operation took %s ms%n", end - start);
 		System.out.println("Categories are: " + categories);
+		System.out.println("=================================================");
 		
 	}
 
 	public static void completablefutureProcess(){
+		System.out.println("CompletableFuture process started.");
 		// create thread to execute completablefuture
 		ExecutorService executor = Executors.newFixedThreadPool(10);
 		
@@ -71,6 +76,7 @@ public class DemoOne {
 		for (Transaction transaction : transactions){
 			CompletableFuture<Category> futureCategory = 
 				CompletableFuture.supplyAsync(() -> CategorizationService.categorizeTransaction(transaction), executor);
+			// add the completableFuture object 
 			futureCategories.add(futureCategory);
 		}	
 
@@ -82,6 +88,7 @@ public class DemoOne {
 		long end = System.currentTimeMillis();
 		System.out.printf("The operation took %s ms%n", end - start);
     	System.out.println("Categories are: " + categories);
+		System.out.println("=================================================");
 	}
 
 

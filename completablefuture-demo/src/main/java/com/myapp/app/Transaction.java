@@ -1,4 +1,4 @@
-package com.mycompany.app;
+package com.myapp.app;
 
 public class Transaction {
 
