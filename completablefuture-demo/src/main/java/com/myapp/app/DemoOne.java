@@ -74,6 +74,7 @@ public class DemoOne {
 			
 		// execute the process in multiple thread
 		for (Transaction transaction : transactions){
+			// started running in thread
 			CompletableFuture<Category> futureCategory = 
 				CompletableFuture.supplyAsync(() -> {
 					// Get the currently running thread
@@ -89,12 +90,15 @@ public class DemoOne {
 
 		// get the completablefuture results. this is the blocking code . it will stops here
 		List<Category> categories = futureCategories.stream().map(CompletableFuture::join).collect(Collectors.toList());
-	
+		// loop for each of the category
+		for( Category c: categories){
+			System.out.println("Category: " + c);
+		}
 		// shutdown/kill the threads
 		executor.shutdown();
 		long end = System.currentTimeMillis();
 		System.out.printf("The operation took %s ms%n", end - start);
-    	System.out.println("Categories are: " + categories);
+    	
 		System.out.println("=================================================");
 	}
 
