@@ -56,7 +56,7 @@ public class DemoOne {
 	public static void completablefutureProcess(){
 		System.out.println("CompletableFuture process started.");
 		// create thread to execute completablefuture
-		ExecutorService executor = Executors.newFixedThreadPool(5);
+		ExecutorService executor = Executors.newFixedThreadPool(7);
 		
 		long start = System.currentTimeMillis();
 		List<CompletableFuture<Category>> futureCategories = new ArrayList<>();
